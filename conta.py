@@ -1,52 +1,55 @@
-class Conta : 
+class Conta:
 
     def __init__(self, numero, titular, saldo, limite):
-        print("Construindo Objeto . . . {}" .format(self))
+        print("Construindo objeto ... {}".format(self))
         self.__numero = numero
         self.__titular = titular
         self.__saldo = saldo
         self.__limite = limite
-    
+
     def extrato(self):
-        print("Saldo de R$ {} do titular {}".format(self.__saldo,self.__titular))
+        print("Saldo de {} do titular {}".format(self.__saldo, self.__titular))
 
     def deposita(self, valor):
         self.__saldo += valor
+        print("O valor de R${} foi depositado!".format(valor))
 
-    def __pode_sacar(self,valor_a_sacar):
-        valor_disponivel =self.__saldo + self.__limite
-        return valor_a_sacar <= valor_disponivel
+    def __pode_sacar(self, valor_a_sacar):
+        valor_disponivel_a_sacar = self.__saldo + self.__limite
+        return valor_a_sacar <= valor_disponivel_a_sacar
 
     def sacar(self, valor):
-        if(self.pode_sacar(valor)):
+        if(self.__pode_sacar(valor)):
             self.__saldo -= valor
+            print("O valor de R${} foi sacado com sucesso!".format(valor))
         else:
-            print("O valor R${} passou do limite".format(valor))
-        
+            print("O valor R${} passou o limite".format(valor))
+
     def transferir(self, valor, destino):
-        self.sacar(valor)
+        self.saca(valor)
         destino.deposita(valor)
-       
+        print("O valor de R${} foi transferido para {}".format(valor,destino))
+
     @property
-    def get_saldo(self):
+    def saldo(self):
         return self.__saldo
-        
+
     @property
     def get_titular(self):
         return self.__titular
 
     @property
-    def get_limite(self):
+    def limite(self):
         return self.__limite
 
-    @property
-    def set_limite(self,limite):
+    @limite.setter
+    def limite(self, limite):
         self.__limite = limite
 
     @staticmethod
     def codigo_banco():
         return "001"
-    
+
     @staticmethod
     def codigos_bancos():
-        return {'BB': '001', 'Caixa': '104', 'Bradesco':'237'}
+        return {'BB':'001', 'Caixa':'104', 'Bradesco':'237'}
